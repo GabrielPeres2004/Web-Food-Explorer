@@ -1,18 +1,33 @@
 import { Container } from "./style"
 
-export function CartItens() {
+import { api } from "../../services/api"
+
+import { useState } from "react"
+
+export function CartItens({ data, onClick, title }) {
+
+
+    const imageUrl = `${api.defaults.baseURL}/files_image_dish/${data.imageDish}`
+
+
     return (
         <Container>
-            <img src="../../assets/molla.svg" alt="" />
+            <img src={imageUrl} alt="Foto do prato" />
 
             <div className="itemInformation">
 
                 <div className="item-description">
-                    <h1>Salada Radish</h1>
-                    <span className="price">$25,97</span>
+                    <h4>{data.name}</h4>
+                    <div>
+                        <span className="quantity">{title}</span>
+                        <span className="price">${data.price}</span>
+                    </div>
                 </div>
 
-                <span className="removeItem">Remover do Carrinho</span>
+                <span
+                    onClick={onClick}
+                    className="removeItem">Remover do Carrinho
+                </span>
 
             </div>
 

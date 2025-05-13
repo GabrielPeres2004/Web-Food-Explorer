@@ -3,31 +3,36 @@ import { USER_ROLES } from "../../utils/roles";
 
 import { useState } from "react";
 
-export function OrderBox() {
-    const [status, setStatus] = useState("pending");
+import { useAuth } from "../../hooks/auth";
 
-    const user = {
-        role: 'admin'
-    }
+export function OrderBox({ data, updatedStatus }) {
+
+    const { user } = useAuth()
 
     return (
         <Container className="OrderBox">
             <header>
-                <span className="idOrder">000004</span>
+                <span className="idOrder">{data.id}</span>
                 {[USER_ROLES.CUSTOMER].includes(user.role) &&
 
                     <div className="statusOrder">
-                        <span className={`statusCircle status-${status}`}></span>
+                        <span className={`statusCircle status-${data.orderCompleted}`}></span>
                         <span>
-                            {status === "pending" && "Pendente"}
-                            {status === "cancelled" && "Cancelado"}
-                            {status === "completed" && "Concluído"}
+                            {data.orderCompleted === "pending" && "Pendente"}
+                            {data.orderCompleted === "cancelled" && "Cancelado"}
+                            {data.orderCompleted === "completed" && "Concluído"}
                         </span>
                     </div>
                 }
 
-                {[USER_ROLES.ADMIN].includes(user.role) &&
-                    <select>
+
+                {
+                    [USER_ROLES.ADMIN].includes(user.role) &&
+
+                    <select
+                        value={data.orderCompleted}
+                        onChange={(e) => updatedStatus(data.id, e.target.value)}
+                    >
                         <option value="pending" >
                             Pendente
                         </option>
@@ -35,16 +40,20 @@ export function OrderBox() {
                         <option value="cancelled">Cancelado</option>
                     </select>
                 }
-                <span>2024-12-07 17:10:21</span>
+                <span>{data.created_at}</span>
             </header>
 
             <main>
                 <div className="descriptionOrder">
-                    <span>1 x Salada Radish</span>
-                    <span>1 x Salada Radish</span>
-                    <span>1 x Salada Radish</span>
-                    <span>1 x Salada Radish</span>
-                    <span>1 x Salada Radish</span>
+                    {
+                        data.itemsOrder.map(items => (
+                            <span
+                                key={String(items.id)}>
+                                {items.count} x {items.dish_name}
+                            </span>
+                        ))
+                    }
+
                 </div>
 
             </main>

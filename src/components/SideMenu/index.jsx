@@ -4,19 +4,17 @@ import { FiX, FiSearch, FiLogOut, FiUser } from "react-icons/fi";
 import { BiSolidDish } from "react-icons/bi";
 import { FaShoppingCart, FaHeart } from 'react-icons/fa';
 
-import { Input } from '../Input'
 import { Button } from '../Button'
 
 import { USER_ROLES } from "../../utils/roles";
 
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "../../hooks/auth";
 
 export function SideMenu({ menuIsOpen, onCloseMenu }) {
     const navigate = useNavigate()
-    const user = {
-        role: "admin"
-    }
+    const { user, SignOut } = useAuth()
 
 
     return (
@@ -33,16 +31,13 @@ export function SideMenu({ menuIsOpen, onCloseMenu }) {
 
             <Main>
 
-                <Input
-                    id='input'
-                    icon={FiSearch}
-                    placeholder='Busque por pratos ou ingredientes'
-                />
+
 
                 <Button
                     id='button'
                     icon={FiLogOut}
                     title='Sair'
+                    onClick={SignOut}
                 />
 
                 <Button

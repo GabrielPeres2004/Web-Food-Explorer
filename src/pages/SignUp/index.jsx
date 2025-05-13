@@ -34,7 +34,7 @@ export function SignUp() {
                     if (sucess) {
                         navigate(-1)
                     }
-                }, 6000);
+                }, 3200)
 
             })
 
@@ -77,7 +77,8 @@ export function SignUp() {
                         <h2>Senha</h2>
                         <Input
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="No mínimo 6 caracteres"
+                            placeholder="Mínimo 6 caracteres"
+                            type="password"
                         />
                     </div>
 

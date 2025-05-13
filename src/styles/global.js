@@ -67,4 +67,9 @@ button:hover , a:hover{
     filter: brightness(0.9);
 }
 
+
+.Toastify__toast {
+  gap: .2rem;
+}
+
 `

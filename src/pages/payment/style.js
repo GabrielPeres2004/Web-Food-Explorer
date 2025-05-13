@@ -23,6 +23,10 @@ padding: 1.2rem;
 
 overflow-y: auto;
 
+> button {
+  margin-block:4.2rem ;
+}
+
 @media (min-width: ${LAYOUTBREAKPOINTS.MD}) {
     padding: 1.4rem 6.4rem;
 }
@@ -57,10 +61,24 @@ h1 {
   padding: 1.2rem;
   border-radius: 1rem;
 
+  gap: .4rem;
+
   background-color: ${({ theme }) => theme.COLORS.DARK_600};
   color: ${({ theme }) => theme.COLORS.WHITE};
 
   margin-top: 1rem;
+
+  #linkToProfile {
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 600ms ease-in-out;
+    color: ${({ theme }) => theme.COLORS.BLUE};
+  }
+  
+  #linkToProfile:hover {
+    color:rgb(112, 209, 219);
+  }
+
 }
 
   .Orders {
@@ -81,11 +99,11 @@ h1 {
 
     margin-block: 1rem 4rem;
 
+
     @media (min-width: ${LAYOUTBREAKPOINTS.LG}) {
-      justify-content: center;
       max-height: 45rem;
-      
     }
+
       
   }
 
@@ -159,8 +177,26 @@ h1 {
 
       color: ${({ theme }) => theme.COLORS.WHITE};
 
+      .optionsDelivery {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 2.4rem;
+
+
+        label{
+          display: flex;
+          align-items: center;
+        }
+
+      }
+
       .paymentPix {
         width: 100%;
+
         display: flex;
         align-items: center;
         justify-content: center;
@@ -177,12 +213,17 @@ h1 {
         }
 
         @media (min-width: ${LAYOUTBREAKPOINTS.MD}) {
+
           img {
             width: 28rem;
             height: 28rem;
           }
-        }
 
+          .optionsDelivery {
+            justify-content: space-evenly;
+
+          }
+        }
 
       }
 
@@ -223,6 +264,28 @@ h1 {
 
 
         }
+
+
+        .optionsDelivery {
+
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          
+          label {
+            width: max-content;
+
+            flex-direction: row;
+            align-items: center;
+
+            gap: 0rem;
+
+          }
+
+          }
+
+          
+      }
 
         .numberInstallments {
           width: 100%; 
@@ -281,9 +344,6 @@ h1 {
           
 
 
-
-
-  }
 
 
 `

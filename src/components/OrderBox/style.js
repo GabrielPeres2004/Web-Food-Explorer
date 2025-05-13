@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { LAYOUTBREAKPOINTS } from "../../styles/layoutBreakpoints";
 
 export const Container = styled.div`
+width: 100%;
+
 color: ${({ theme }) => theme.COLORS.LIGHT_400};
 border: 1px solid ${({ theme }) => theme.COLORS.LIGHT_400};
 

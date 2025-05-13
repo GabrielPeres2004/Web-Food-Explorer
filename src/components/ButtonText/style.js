@@ -11,8 +11,6 @@ gap: .8rem;
 background: none;
 border: none;
 
-margin-top: 2.2rem;
-
 color: ${({ theme }) => theme.COLORS.WHITE};
 
 p {

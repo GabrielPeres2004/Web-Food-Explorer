@@ -22,20 +22,27 @@ overflow-y: auto;
 
 display: flex;
 align-items: center;
-justify-content: center;
+justify-content: space-evenly;
 flex-direction: column;
+
+padding: 1rem;
+
+gap: 2rem;
 
 > button {
   width: 100%;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 3rem;
-  padding-left: 3rem;
+  margin-top: 2rem;
+  padding-left: 1.6rem;    
+}
+
+@media (min-width: ${LAYOUTBREAKPOINTS.SM}) {
+  padding: 1rem 2.2rem;
 }
 
 @media (min-width: ${LAYOUTBREAKPOINTS.MD}) {
-  padding: 1.4rem 18rem;
-  
+  padding: 4.2rem 3.8rem;
 }
 
 `
@@ -46,8 +53,7 @@ align-items: center;
 justify-content: center;
 flex-direction: column;
 
-padding: .8rem;
-
+width: 100%;
 
 img {
   width: 18.4rem;
@@ -103,6 +109,13 @@ img {
     align-items: center;
     justify-content: center;
 
+    padding: 1rem;
+
+    height: max-content;
+    width: 35%;
+
+    border-radius: 1rem;
+
     button:nth-child(2){
       margin-inline: 2rem;
     }
@@ -114,13 +127,12 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 65%;
   }
 
 }
 
 @media (min-width: ${LAYOUTBREAKPOINTS.MD}) {
-  width: max-content;
-
 
   img {
     width: 28.4rem;
@@ -151,16 +163,13 @@ img {
   
   .addAndSubtract{
     display: flex;
-    justify-content: flex-end;
-    padding: 1rem 0 3rem;
-
-    button {
-
-    }
+    justify-content: center;
+    align-items: center;
 
     button:hover{
       scale: 1.1;
     }
+
   }
 
 

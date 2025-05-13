@@ -13,9 +13,9 @@ export default {
         BLUE: "#82F3FF",
 
         RED: "#750310",
-        TOMATO_500: "#AB222E",
-        TOMATO_400: "#AB4D55",
-        TOMATO_300: "#AB222E",
+        TOMATO_500: "#92000E",
+        TOMATO_400: "#AB222E",
+        TOMATO_300: "#AB4D55",
         ORANGE: "#ff4500",
 
 

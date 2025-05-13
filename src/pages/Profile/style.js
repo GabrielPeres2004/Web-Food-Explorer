@@ -29,7 +29,9 @@ padding: 1.2rem;
     padding: 1.4rem 10.6rem;
 }
 
-
+> button {
+  margin-block: 4.2rem;
+}
 
 form {
   display: flex;
@@ -37,7 +39,6 @@ form {
   justify-content: center;
   flex-direction: column;
 
-  margin-top: 2rem;
 
   .UserImage {
     display: flex;

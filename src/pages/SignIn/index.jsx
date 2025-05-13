@@ -49,6 +49,7 @@ export function SignIn() {
                         <Input
                             placeholder="No mínimo 6 caracteres"
                             onChange={(e) => setPassword(e.target.value)}
+                            type="password"
                         />
                     </div>
 

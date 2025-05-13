@@ -19,7 +19,6 @@ div, label {
         margin-left: .5rem;
         color: ${({ theme }) => theme.COLORS.LIGHT_400};
         font-weight: 500;
-        margin-bottom: .8rem;
     }
 
    div {

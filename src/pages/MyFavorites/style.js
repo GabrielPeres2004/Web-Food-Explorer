@@ -43,18 +43,27 @@ main {
     
     .Orders {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
         flex-wrap: wrap;
+
+        margin-top: 2rem;
 
         padding-block: 1rem;
 
-        height: 90%;
-        
         overflow-y: auto;
         
-        gap: 2.4rem;
+        gap: 3rem;
         
         border-radius: 1rem;
+
+    @media (min-width: ${LAYOUTBREAKPOINTS.LG}) { 
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
 
     }
     

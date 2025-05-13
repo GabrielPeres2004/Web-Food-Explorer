@@ -24,7 +24,7 @@ overflow-y: auto;
 color: white;
 
 > Button {
-    margin-bottom: 1rem;
+    margin-block: 4.2rem;
 }
 
 table {
@@ -39,6 +39,18 @@ h1 {
     color: ${({ theme }) => theme.COLORS.WHITE};
     font-size: 2.8rem;
     margin-bottom: 2rem;
+}
+
+#orderBox {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 2.4rem;
+
 }
 
 

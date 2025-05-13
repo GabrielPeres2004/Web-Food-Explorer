@@ -1,39 +1,128 @@
-import { Container } from "./style";
+import { useLocation } from "react-router-dom"
+import { Container } from "./style"
 
-import { SideMenu } from "../../components/SideMenu";
-import { Header } from "../../components/Header/Index";
-import { CardDish } from "../../components/CardDish";
+import { SideMenu } from "../../components/SideMenu"
+import { Header } from "../../components/Header/Index"
+import { CardDish } from "../../components/CardDish"
+import { Input } from "../../components/Input"
 
 
-import Checkbox from '@mui/material/Checkbox';
+import { useAuth } from "../../hooks/auth"
 
-import { useState } from "react";
+import Checkbox from '@mui/material/Checkbox'
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { useState, useEffect } from "react"
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Navigation, Pagination, Autoplay } from "swiper/modules"
+
+import { api } from "../../services/api"
+import { USER_ROLES } from "../../utils/roles"
+
+import { toast } from "react-toastify"
+
+import { FiSearch } from "react-icons/fi"
+
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 
 export function Home() {
+    const { user, SignOut } = useAuth()
+
+    const location = useLocation()
+
     const [menuIsOpen, setMenuIsOpen] = useState(false)
-    const [selectedCategories, setSelectedCategories] = useState(["All"]);
+    const [selectedCategories, setSelectedCategories] = useState(["All"])
+
+
+    const [dishes, setDishes] = useState([])
+    const [favorites, setFavorites] = useState([])
+    const [search, setSearch] = useState("")
 
     const handleCheckboxChange = (category) => {
         if (category === "All") {
-            setSelectedCategories(["All"]);
+            setSelectedCategories(["All"])
         } else {
             setSelectedCategories((prev) => {
-                const updatedCategories = prev.includes(category)
-                    ? prev.filter((item) => item !== category)
-                    : [...prev.filter((item) => item !== "All"), category];
+                const updatedCategories = prev.includes(category) ? prev.filter((item) => item !== category)
+                    : [...prev.filter((item) => item !== "All"), category]
 
-                return updatedCategories.length === 0 ? ["All"] : updatedCategories;
-            });
+                return updatedCategories.length === 0 ? ["All"] : updatedCategories
+            })
         }
-    };
+    }
+
+
+    const filteredDishes = dishes.filter(dish => {
+        if (user.role === USER_ROLES.ADMIN) return true
+        return dish.active === 1
+    })
+
+    useEffect(() => {
+        try {
+            async function fetchDishes() {
+                const response = await api
+                    .get(`/dish?name=${search}`)
+                    .catch((error) => {
+                        if (error.response?.status === 401) {
+                            SignOut()
+                            return
+                        }
+
+                    })
+                setDishes(response.data)
+            }
+
+            fetchDishes()
+
+        } catch (error) {
+
+            if (error.response?.status === 401) {
+                SignOut()
+            }
+
+            if (error.response) {
+                toast.error(error.response.data.message)
+            }
+
+        }
+
+    }, [search])
+
+    useEffect(() => {
+
+        try {
+            async function getDish() {
+                const response = await api.get(`/dish`)
+                setDishes(response.data)
+            }
+
+            async function getFavoriteDish() {
+                const response = await api.get(`/favorite`)
+                setFavorites(response.data)
+            }
+
+            if (location.pathname === "/") {
+                getDish()
+                getFavoriteDish()
+            }
+
+        } catch (error) {
+
+            if (error.response?.status === 401) {
+                SignOut()
+            }
+
+            if (error.response) {
+                toast.error(error.response.data.message)
+            }
+
+        }
+
+
+    }, [location])
 
 
     return (
@@ -42,20 +131,24 @@ export function Home() {
             <SideMenu
                 menuIsOpen={menuIsOpen}
                 onCloseMenu={() => setMenuIsOpen(false)}
+                onChange={(e) => setSearch(e.target.value)}
             />
 
             <Header
                 onOpenMenu={() => setMenuIsOpen(true)}
+                onChange={(e) => setSearch(e.target.value)}
             />
 
             <main>
                 <header>
 
-
+                    <Input
+                        icon={FiSearch}
+                        placeholder='Busque por pratos'
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
 
                     <div className="imgDish">
-                        <img src="" alt="" />
-
                         <h3>Descubra uma experiência gastronômica única no Food Explorer !</h3>
                         <p>Aqui, cada prato é preparado com ingredientes selecionados e um toque especial de sabor e sofisticação. Explore novas combinações e se delicie com criações inesquecíveis!
                         </p>
@@ -134,216 +227,143 @@ export function Home() {
                 </header>
 
 
+
                 {(selectedCategories.includes("All") || selectedCategories.includes("Snack")) && (
-                    <div className="Snack">
-                        <h2>Refeição</h2>
+                    dishes.some(dish => dish.category === "Refeição") && (
+                        < div className="Snack">
+                            <h2>Refeição</h2>
 
-                        <Swiper
-                            modules={[Navigation, Pagination, Autoplay]}
-                            slidesPerView={1}
-                            spaceBetween={10}
-                            navigation
-                            pagination={{
-                                clickable: true,
-                            }}
-                            breakpoints={{
-                                640: { slidesPerView: 2, spaceBetween: 20 },
-                                1024: { slidesPerView: 3, spaceBetween: 30 },
-                                1440: { slidesPerView: 3, spaceBetween: 0 },
-                            }}
-                            autoplay={{
-                                delay: 3000,
-                                disableOnInteraction: true,
-                            }}
+                            <Swiper
+                                modules={[Navigation, Pagination, Autoplay]}
+                                slidesPerView={1}
+                                spaceBetween={19}
+                                pagination={{
+                                    clickable: true,
+                                }}
+                                breakpoints={{
+                                    640: { slidesPerView: 2, spaceBetween: 20 },
+                                    1024: { slidesPerView: 3, spaceBetween: 30, navigation },
+                                    1440: { slidesPerView: 3, spaceBetween: 30, navigation },
+                                }}
+                                autoplay={{
+                                    delay: 3000,
+                                    disableOnInteraction: true,
+                                }}
 
-                            className="mySwiper"
-                        >
+                                className="mySwiper"
+                            >
+                                {
+                                    filteredDishes &&
+                                    filteredDishes
+                                        .filter((item) => item.category === "Refeição")
+                                        .map((item) => (
+
+                                            <SwiperSlide key={String(item.id)} className="mySwiperSlide">
+                                                <CardDish
+                                                    data={item}
+                                                    isFavorite={favorites.some(fav => fav.dish_id === item.id)}
+                                                />
+                                            </SwiperSlide>
+                                        ))
+                                }
 
 
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                        </Swiper>
-                    </div>
+                            </Swiper>
+                        </div>
+                    )
                 )}
 
-
                 {(selectedCategories.includes("All") || selectedCategories.includes("Drinks")) && (
-                    <div className="Drinks">
-                        <h2>Bebidas</h2>
+                    dishes.some(dish => dish.category === "Bebidas") && (
+                        <div className="Drinks">
+                            <h2>Bebidas</h2>
 
-                        <Swiper
-                            modules={[Navigation, Pagination, Autoplay]}
-                            slidesPerView={1}
-                            spaceBetween={10}
-                            navigation
-                            pagination={{
-                                clickable: true,
-                            }}
-                            breakpoints={{
-                                640: { slidesPerView: 2, spaceBetween: 20 },
-                                1024: { slidesPerView: 3, spaceBetween: 30 },
-                                1440: { slidesPerView: 3, spaceBetween: 0 },
-                            }}
-                            autoplay={{
-                                delay: 3000,
-                                disableOnInteraction: true,
-                            }}
+                            <Swiper
+                                modules={[Navigation, Pagination, Autoplay]}
+                                slidesPerView={1}
+                                spaceBetween={10}
+                                navigation
+                                pagination={{
+                                    clickable: true,
+                                }}
+                                breakpoints={{
+                                    640: { slidesPerView: 2, spaceBetween: 20 },
+                                    1024: { slidesPerView: 3, spaceBetween: 30 },
+                                    1440: { slidesPerView: 3, spaceBetween: 0 },
+                                }}
+                                autoplay={{
+                                    delay: 3000,
+                                    disableOnInteraction: true,
+                                }}
 
-                            className="mySwiper"
-                        >
+                                className="mySwiper"
+                            >
 
+                                {
+                                    filteredDishes &&
+                                    filteredDishes
+                                        .filter((item) => item.category === "Bebidas")
+                                        .map((item) => (
 
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
+                                            <SwiperSlide key={String(item.id)} className="mySwiperSlide">
+                                                <CardDish
+                                                    data={item}
+                                                    isFavorite={favorites.some(fav => fav.dish_id === item.id)}
+                                                />
+                                            </SwiperSlide>
+                                        ))
+                                }
 
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                        </Swiper>
-                    </div>
+                            </Swiper>
+                        </div>
+                    )
                 )}
 
 
                 {(selectedCategories.includes("All") || selectedCategories.includes("Desserts")) && (
-                    <div className="Desserts">
-                        <h2>Sobremesa</h2>
+                    dishes.some(dish => dish.category === "Sobremesa") && (
+                        <div className="Desserts">
+                            <h2>Sobremesa</h2>
 
-                        <Swiper
-                            modules={[Navigation, Pagination, Autoplay]}
-                            slidesPerView={1}
-                            spaceBetween={10}
-                            navigation
-                            pagination={{
-                                clickable: true,
-                            }}
-                            breakpoints={{
-                                640: { slidesPerView: 2, spaceBetween: 20 },
-                                1024: { slidesPerView: 3, spaceBetween: 30 },
-                                1440: { slidesPerView: 3, spaceBetween: 0 },
-                            }}
-                            autoplay={{
-                                delay: 3000,
-                                disableOnInteraction: true,
-                            }}
+                            <Swiper
+                                modules={[Navigation, Pagination, Autoplay]}
+                                slidesPerView={1}
+                                spaceBetween={10}
+                                navigation
+                                pagination={{
+                                    clickable: true,
+                                }}
+                                breakpoints={{
+                                    640: { slidesPerView: 2, spaceBetween: 20 },
+                                    1024: { slidesPerView: 3, spaceBetween: 30 },
+                                    1440: { slidesPerView: 3, spaceBetween: 0 },
+                                }}
+                                autoplay={{
+                                    delay: 3000,
+                                    disableOnInteraction: true,
+                                }}
 
-                            className="mySwiper"
-                        >
+                                className="mySwiper"
+                            >
 
+                                {
+                                    filteredDishes &&
+                                    filteredDishes
+                                        .filter((item) => item.category === "Sobremesa")
+                                        .map((item) => (
 
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
+                                            <SwiperSlide key={String(item.id)} className="mySwiperSlide">
+                                                <CardDish
+                                                    data={item}
+                                                    isFavorite={favorites.some(fav => fav.dish_id === item.id)}
+                                                />
+                                            </SwiperSlide>
+                                        ))
+                                }
 
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                            <SwiperSlide
-                                className="mySwiperSlide">
-                                <CardDish />
-                            </SwiperSlide>
-
-                        </Swiper>
-                    </div>
+                            </Swiper>
+                        </div>
+                    )
                 )}
 
             </main>

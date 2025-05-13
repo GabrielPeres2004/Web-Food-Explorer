@@ -33,6 +33,10 @@ main {
     margin-top: 3.2rem;
 
 
+    > div {
+      margin-bottom: 1rem;
+    }
+
     .imgDish {
       display: flex;
       align-items: center;

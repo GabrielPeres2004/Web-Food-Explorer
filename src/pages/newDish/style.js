@@ -31,9 +31,11 @@ overflow-y: auto;
   padding: 1.4rem 10.6rem;
 
   .information-dish {
-    display: flex;
-    gap: 1.2rem;
+      display: flex;
+      gap: 1.2rem;
+      color: white;
   }
+
 
   .categoryAndPrice {
     width: 100%;
@@ -64,10 +66,13 @@ overflow-y: auto;
 
 }
 
-
-
 form {
   width: 100%;
+
+  > button {
+  margin-top: 3.2rem;
+}
+
 }
 
 h1 {
@@ -81,16 +86,52 @@ h1 {
 section {
     padding: 0;
 
+    label {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+
+      flex-direction: column;
+
+      gap: .8rem;
+    }
+    
+    #imageFile{
+      article {
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        gap: 4.8rem;
+
+        p {
+          color: ${({ theme }) => theme.COLORS.LIGHT_400};
+        }
+
+      }
+    }
+
+    #category {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      
+      flex-direction: column;
+
+      gap: .8rem;
+
+    }
+
+
     #inputSearch {
       background-color: ${({ theme }) => theme.COLORS.DARK_700};
     }
 
-
     select {
       width: 100%;
       
-
-      padding: 2rem 1.6rem;
+      padding: 1.9rem 1.2rem;
       
       border-radius: 1rem;
 
@@ -100,7 +141,6 @@ section {
       border: none;
       outline: none;
 
-      margin-bottom: 1.2rem;
 
     }
 

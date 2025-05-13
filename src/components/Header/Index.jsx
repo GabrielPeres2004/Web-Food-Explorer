@@ -4,6 +4,7 @@ import { FiList, FiShoppingCart, FiSearch, FiLogOut } from "react-icons/fi";
 import { BiSolidDish } from "react-icons/bi";
 import { FaHeart } from 'react-icons/fa';
 
+import avatarPlaceholder from '/assets/avatar_placeholder.svg'
 
 import { Input } from '../Input'
 import { Button } from '../Button'
@@ -14,18 +15,33 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../hooks/auth"
 
+import { api } from "../../services/api";
 
-export function Header({ onOpenMenu, closeHeader }) {
+import { useState, useEffect } from "react";
+
+export function Header({ onOpenMenu, onChange }) {
     const navigate = useNavigate()
     const { user, SignOut } = useAuth()
 
-    function handleBack() {
-        navigate(-1)
-    }
+    const imageURL = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+
+    const [itemsCount, setItemsCount] = useState(0)
+
+    useEffect(() => {
+        function updateCartCount() {
+            const items = JSON.parse(localStorage.getItem('@food-explorer:ItemsCart')) || []
+            setItemsCount(items.length)
+        }
+
+        updateCartCount()
+        window.addEventListener("cartChanged", updateCartCount)
+
+        return () => window.removeEventListener("cartChanged", updateCartCount)
+    }, [])
+
 
     return (
         <Container >
-
 
             <Button
                 onClick={onOpenMenu}
@@ -46,14 +62,15 @@ export function Header({ onOpenMenu, closeHeader }) {
                 className="profile"
                 onClick={() => navigate("/profile")}
             >
-                <img src="/assets/Profile.jpg" alt="Imagem do usúario" />
+                <img src={imageURL} alt="Imagem do usúario" />
             </div>
 
 
             <Input
                 id="input"
                 icon={FiSearch}
-                placeholder="Busque por pratos ou ingredientes"
+                placeholder="Busque por pratos"
+                onChange={onChange}
             />
 
 
@@ -81,7 +98,7 @@ export function Header({ onOpenMenu, closeHeader }) {
                     id="CartItems"
                     size={18}
                     icon={FiShoppingCart}
-                    title="Carrinho (0)"
+                    title={`Carrinho (${itemsCount})`}
                     onClick={() => navigate("/payment")}
                 />
             }
@@ -110,7 +127,7 @@ export function Header({ onOpenMenu, closeHeader }) {
             >
                 <FiShoppingCart />
                 <div id="numberCart">
-                    <p>0</p>
+                    <p>{itemsCount}</p>
                 </div>
             </ShoppingCart>
 

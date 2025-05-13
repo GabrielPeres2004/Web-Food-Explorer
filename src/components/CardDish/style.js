@@ -9,13 +9,16 @@ justify-content: center;
 
 background: ${({ theme }) => theme.COLORS.DARK_900};
 
-width: 90%;
+width: 100%;
+height: 100%;
+overflow: hidden;
 
 border-radius: 2.4rem;
 border: 1px solid ${({ theme }) => theme.COLORS.LIGHT_300};
 
 padding: 2rem;
 
+text-align: center;
 
 #favorite {
     width: 100%;
@@ -24,27 +27,58 @@ padding: 2rem;
     justify-content: flex-end;
     margin-top: 1rem;
     
+    #addTofavorites {
+        color: ${({ theme }) => theme.COLORS.WHITE};
+    }
+
+    #removeTofavorites {
+        color: ${({ theme }) => theme.COLORS.RED};
+    }
+
     svg {
         color: ${({ theme }) => theme.COLORS.WHITE};
     }
-    
+
 }
 
-&[data-is-favorite='true']{
-    #addTofavorites {
-        color: ${({ theme }) => theme.COLORS.TOMATO_500}
-    }
-}
 
 img {
-    width: 10rem;
-    height: 10rem;
+    width: 16rem;
+    height: 16rem;
     object-fit: cover;
-    margin-bottom: 2rem;
+    margin-block: 2rem;
+    border-radius: 10%;
 }
 
-p {
+#nameDish {
     color: ${({ theme }) => theme.COLORS.WHITE};
+    font-size: 1.8rem;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    width: 100%;
+}
+
+#description, #desactiveDish {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    width: 100%;
+
+    font-size: 1.6rem;
+
+    color: ${({ theme }) => theme.COLORS.LIGHT_400};
+
+    text-align: center;
+
+    margin-block: 1.2rem;
+}
+
+#desactiveDish {
+    color: red;
     font-size: 1.8rem;
 }
 
@@ -52,6 +86,7 @@ span {
     margin-top: .5rem;
     color: ${({ theme }) => theme.COLORS.BLUE};
     font-size: 1.6rem;
+    margin-bottom: 2rem;
 }
 
 #addToCart {
@@ -71,8 +106,8 @@ span {
 
 @media (min-width: ${LAYOUTBREAKPOINTS.MD}) {
     img {
-        width: 12rem;
-        height: 12rem;
+        width: 18rem;
+        height: 18rem;
     }
 }
 
@@ -80,8 +115,8 @@ span {
 @media (min-width: ${LAYOUTBREAKPOINTS.LG}) {
     
     img {
-        width: 13rem;
-        height: 13rem;
+        width: 18rem;
+        height: 18rem;
     }
 
     #favorite {

@@ -26,7 +26,7 @@ input {
     background: transparent;
     padding: .5rem;
     
-    color: ${({ theme, $isNew }) => $isNew ? theme.COLORS.LIGHT_500 : theme.COLORS.WHITE};
+    color: ${({ theme, $isNew }) => $isNew ? theme.COLORS.LIGHT_400 : theme.COLORS.WHITE};
         
     outline: none; 
     border: none;

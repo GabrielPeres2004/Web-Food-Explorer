@@ -14,6 +14,7 @@ export function DishItem({ isNew, value, onClick, ...rest }) {
 
 
             <button
+                type='button'
                 onClick={onClick}>
                 {isNew ? <FiPlus /> : <FiX />}
             </button>
