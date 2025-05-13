@@ -56,12 +56,15 @@ export function SideMenu({ menuIsOpen, onCloseMenu }) {
                     />
                 }
 
-                <Button
-                    id='button'
-                    icon={FaShoppingCart}
-                    title={user.role === USER_ROLES.CUSTOMER ? "Meus pedidos" : "Todos os pedidos"}
-                    onClick={() => navigate("/orderHistory")}
-                />
+                {[USER_ROLES.CUSTOMER].includes(user.role) &&
+
+                    <Button
+                        id='button'
+                        icon={FaShoppingCart}
+                        title={user.role === USER_ROLES.CUSTOMER ? "Meus pedidos" : "Todos os pedidos"}
+                        onClick={() => navigate("/orderHistory")}
+                    />
+                }
 
 
                 {[USER_ROLES.CUSTOMER].includes(user.role) &&
