@@ -28,6 +28,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 
+console
 export function Home() {
     const { user, SignOut } = useAuth()
 
@@ -242,8 +243,8 @@ export function Home() {
                                 }}
                                 breakpoints={{
                                     640: { slidesPerView: 2, spaceBetween: 20 },
-                                    1024: { slidesPerView: 3, spaceBetween: 30, navigation },
-                                    1440: { slidesPerView: 3, spaceBetween: 30, navigation },
+                                    1024: { slidesPerView: 3, spaceBetween: 30 },
+                                    1440: { slidesPerView: 3, spaceBetween: 30 },
                                 }}
                                 autoplay={{
                                     delay: 3000,
