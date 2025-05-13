@@ -138,6 +138,7 @@ export function MyFavorites() {
                                     key={String(item.id)}
                                     data={item}
                                     onClick={() => removeToFavorites(item.id)}
+                                    text="Remover dos favoritos"
                                 />
                             ))
 

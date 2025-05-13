@@ -4,7 +4,7 @@ import { api } from "../../services/api"
 
 import { useState } from "react"
 
-export function CartItens({ data, onClick, title }) {
+export function CartItens({ data, onClick, title, text }) {
 
 
     const imageUrl = `${api.defaults.baseURL}/files_image_dish/${data.imageDish}`
@@ -26,7 +26,9 @@ export function CartItens({ data, onClick, title }) {
 
                 <span
                     onClick={onClick}
-                    className="removeItem">Remover do Carrinho
+                    className="removeItem">
+                    {text}
+
                 </span>
 
             </div>

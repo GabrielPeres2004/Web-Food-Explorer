@@ -274,6 +274,7 @@ export function Payment() {
                                     data={dish}
                                     onClick={() => handleDeleteItemCart(dish.id)}
                                     title={`X ${dish.quantity}`}
+                                    text="Remover do Carrinho"
                                 />
 
                             ))
