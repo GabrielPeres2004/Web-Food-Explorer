@@ -8,10 +8,10 @@ O **Food Explorer** é uma aplicação voltada para proporcionar uma experiênci
 
 Os principais recursos da aplicação incluem:
 
-- **Visualização de pratos**: Os clientes podem navegar entre diferentes restaurantes e visualizar o cardápio completo de pratos.
-- **Realização de pedidos**: Os clientes podem selecionar os pratos desejados e fazer pedidos diretamente através da plataforma.
-- **Área administrativa**: Administradores têm a capacidade de gerenciar os dados dos restaurantes e pratos, incluindo adição, edição e remoção de informações.
-- **Notificações**: A aplicação utiliza **React Toastify** para mostrar notificações relevantes para o usuário, como sucesso em pedidos ou alertas administrativos.
+- **Visualização de pratos**: Os clientes podem explorar o cardápio completo do restaurante.
+- **Realização de pedidos**: Os clientes podem selecionar os pratos desejados e fazer pedidos diretamente pela plataforma.
+- **Área administrativa**: Administradores têm a capacidade de gerenciar os dados dos pratos, incluindo adição, edição e remoção de informações.
+
 
 ## Tecnologias Utilizadas
 
