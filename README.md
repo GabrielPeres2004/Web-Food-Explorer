@@ -1,7 +1,17 @@
-
 # Food Explorer - Front-end
 
 O **Food Explorer - Front-end** é a interface de usuário que permite aos clientes visualizarem os pratos dos restaurantes, fazer pedidos e interagir com o sistema de forma intuitiva. Também oferece uma interface administrativa onde os administradores podem gerenciar os dados de restaurantes e pratos.
+
+## Sobre o Projeto
+
+O **Food Explorer** é uma aplicação voltada para proporcionar uma experiência simples e agradável ao usuário, onde ele pode explorar pratos de diferentes restaurantes e realizar pedidos. A interface foi projetada para ser intuitiva e responsiva, com o objetivo de facilitar a navegação tanto para clientes quanto para administradores. 
+
+Os principais recursos da aplicação incluem:
+
+- **Visualização de pratos**: Os clientes podem navegar entre diferentes restaurantes e visualizar o cardápio completo de pratos.
+- **Realização de pedidos**: Os clientes podem selecionar os pratos desejados e fazer pedidos diretamente através da plataforma.
+- **Área administrativa**: Administradores têm a capacidade de gerenciar os dados dos restaurantes e pratos, incluindo adição, edição e remoção de informações.
+- **Notificações**: A aplicação utiliza **React Toastify** para mostrar notificações relevantes para o usuário, como sucesso em pedidos ou alertas administrativos.
 
 ## Tecnologias Utilizadas
 
